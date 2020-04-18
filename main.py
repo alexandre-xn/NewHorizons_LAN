@@ -2,7 +2,6 @@ import socket
 import sys
 from enum import Enum
 
-
 class PayloadPart(Enum):
     SPACE_1 = 0,
     SPACE_2 = 1,
@@ -13,7 +12,7 @@ server_reqs = ['0145000028032500004011eb370a0d784f0a0dffff2cbc2cbc0014d4bf001445
                '0145000028032600004011eb360a0d784f0a0dffff2cbc2cbc0014d4bf001445110000000000000000',
                '0145000028032700004011eb350a0d784f0a0dffff2cbc2cbc0014d4bf001445110000000000000000']
 
-VERBOSE_MODE = sys.argv.pop()
+VERBOSE_MODE = "not_verbose"
 
 
 def fetch_hosts_from_server(server_name, portnum):
@@ -27,7 +26,7 @@ def fetch_hosts_from_server(server_name, portnum):
 
     print("Server : " + server_name + " @ " + ipaddr)
     s.connect((ipaddr, portnum))
-    s.settimeout(2)
+    s.settimeout(3)
 
     retry_times = 5
 
@@ -57,7 +56,7 @@ def fetch_hosts_from_server(server_name, portnum):
                     if len(player_list[-1]) != 1:
                         island_name = player_list[-1]
                     else:
-                        island_name = "???"
+                        island_name = "Russian"
                         player_count = 1
 
                 hosts.append((island_name, player_list, player_count))
@@ -66,12 +65,13 @@ def fetch_hosts_from_server(server_name, portnum):
                     print("Data received but no hosts")
 
             retry_times -= 1
+        print("Response : Communication established")
 
     except socket.timeout:
         print("Response : Timed out (no hosts ?)")
+    
 
     return hosts
-
 
 def extract_next_string_from_udp_payload(payload):
     payload = payload[::-1]
@@ -127,5 +127,6 @@ def fetch_all():
     print("------------")
     fetch_all()
 
-
-fetch_all()
+#fetch_all()
+print(str(sys.argv[1]) + ":" + sys.argv[2])
+print(fetch_hosts_from_server(str(sys.argv[1]), int(sys.argv[2])))
