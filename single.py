@@ -12,7 +12,7 @@ class PayloadPart(Enum):
 server_reqs = ['0145000028032500004011eb370a0d784f0a0dffff2cbc2cbc0014d4bf001445110000000000000000',
                '0145000028091c00004011e5400a0d784f0a0dffff2cbc2cbc0014d4bf001445110000000000000000']
 
-VERBOSE_MODE = "not_verbose"
+VERBOSE_MODE = "debug_query"
 
 
 def fetch_hosts_from_server(server_name, portnum):
@@ -123,8 +123,5 @@ def convert_raw_int_to_int(
     }
     return switcher.get(raw_int, 1)
 
-#if VERBOSE_MODE and VERBOSE_MODE == "debug_query":
-#    print(fetch_hosts_from_server('81.98.26.94', 11451))
-#else:
-print(str(sys.argv[1]) + ":" + sys.argv[2])
-print(fetch_hosts_from_server(str(sys.argv[1]), int(sys.argv[2])))
+
+print(fetch_hosts_from_server('switch.lan-play.com', 11452))

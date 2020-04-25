@@ -2,14 +2,18 @@ const {
   app,
   BrowserWindow
 } = require('electron')
+
 let {
   PythonShell
 } = require('python-shell')
 
 const server_response_types = {
-  TIMED_OUT: 'Response : Timed out (no hosts ?)',
-  NORMAL: ''
+  SERVER_TIMEOUT: "Response : Server timeout",
+  NO_HOSTS: "Response : No hosts",
+  HOSTS_FOUND: "Response : Hosts found",
+  SERVER_ERROR: "Response : Server error"
 }
+exports.server_response_types = server_response_types
 
 let global_server_list = [
   ['switch.lan-play.com', 11452],
@@ -22,11 +26,11 @@ let global_server_list = [
   ['lanplay2.reboot.ms', 11451],
   ['joinsg.net', 11451],
   ['switch.jayseateam.nl', 11451],
-  ['nook-hq.ml', 11451]
+  ['nook-hq.ml', 11451],
+  ['nxlan-w.dentora.ca', 11451] 
 ]
 
 function createWindow() {
-  // Cree la fenetre du navigateur.
   let win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -34,7 +38,9 @@ function createWindow() {
       nodeIntegration: true
     }
   })
+  win.setFullScreen(true)
 
+  //win.setMenu(null)
   win.loadFile('index.html')
 
   query_all_servers(win, global_server_list)
@@ -56,13 +62,13 @@ function sleep(ms) {
 
 async function query_server(options, window) {
   PythonShell.run('main.py', options, async function (err, results) {
-    if (err) throw err;
-    console.log(results)
-    window.webContents.send('server-data', results)
-    if (results[2] == server_response_types.TIMED_OUT) {
-      await sleep(3000)
-      query_server(options, window)
+    if (err) {
+      console.log(err)
+      results = [options.args[0] + ":" + options.args[1], options.args[0] + ":" + options.args[1], server_response_types.SERVER_ERROR, '[]']
     }
+    window.webContents.send('server-data', results)
+    await sleep(3000)
+    query_server(options, window)
   });
 }
 
