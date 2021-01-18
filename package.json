@@ -1,0 +1,28 @@
+{
+  "name": "newhorizons_lan",
+  "version": "1.0.0",
+  "description": "Cool interface for Animal Crossing LAN.",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shibikku/NewHorizons_LAN.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shibikku/NewHorizons_LAN/issues"
+  },
+  "homepage": "https://github.com/shibikku/NewHorizons_LAN#readme",
+  "devDependencies": {
+    "electron": "^8.2.2"
+  },
+  "dependencies": {
+    "python-shell": "^1.0.8",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
+    "xel": "0.0.220"
+  }
+}
