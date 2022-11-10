@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/shibikku/NewHorizons_LAN#readme",
   "devDependencies": {
-    "electron": "^8.2.2"
+    "electron": "^18.3.7"
   },
   "dependencies": {
     "python-shell": "^1.0.8",
